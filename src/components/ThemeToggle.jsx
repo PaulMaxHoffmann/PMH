@@ -3,16 +3,26 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 export const ThemeToggle = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  // Start state as true to match the new dark default
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
-    if (storedTheme === "dark") {
+    
+    // Check if the user has explicitly chosen "light" before. 
+    // If not, or if they chose "dark", we default to dark mode.
+    if (storedTheme === "light") {
+      setIsDarkMode(false);
+      document.documentElement.classList.remove("dark");
+    } else {
+      // This is the default path (first-time visit or dark preference)
       setIsDarkMode(true);
       document.documentElement.classList.add("dark");
-    } else {
-      localStorage.setItem("theme", "light");
-      setIsDarkMode(false);
+      
+      // Save "dark" as the preference if it was empty
+      if (!storedTheme) {
+        localStorage.setItem("theme", "dark");
+      }
     }
   }, []);
 
@@ -32,8 +42,6 @@ export const ThemeToggle = () => {
     <button
       onClick={toggleTheme}
       className={cn(
-        // Removed 'max-sm:hidden'
-        // Adjusted 'right' and 'top' to ensure it doesn't overlap the mobile menu
         "fixed top-4 right-16 sm:right-5 z-50 p-2 rounded-full transition-colors duration-300",
         "hover:bg-primary/10 focus:outline-none"
       )}
