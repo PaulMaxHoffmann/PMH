@@ -123,7 +123,7 @@ const categories = ["all", "current", "past"];
 // Function to handle the actual file opening/download
 const handleDownload = (fileName, courseFolder) => {
   // Use the course-specific folder instead of hardcoding cs111
-  const filePath = `/Classes/${courseFolder}/${fileName}`; 
+  const filePath = `./Classes/${courseFolder}/${fileName}`; 
   window.open(filePath, '_blank'); 
 };
 
