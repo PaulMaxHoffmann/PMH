@@ -44,7 +44,7 @@ const courses = [
     ],
   },
   {
-    name: "CS 322 Data Science in practice",
+    name: "CS 322 Data Science in Practice",
     year: "Spring 2026",
     category: "current",
     folder: "CS322",
