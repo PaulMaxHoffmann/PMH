@@ -120,10 +120,12 @@ const courses = [
 
 const categories = ["all", "current", "past"];
 
-// Function to handle the actual file opening/download
 const handleDownload = (fileName, courseFolder) => {
-  // Use the course-specific folder instead of hardcoding cs111
-  const filePath = `./Classes/${courseFolder}/${fileName}`; 
+  // import.meta.env.BASE_URL automatically provides "/PMH/"
+  // We remove the leading slash from "Classes" to avoid a double slash (//)
+  const filePath = `${import.meta.env.BASE_URL}Classes/${courseFolder}/${fileName}`; 
+  
+  console.log("Opening file at:", filePath); // For debugging in your browser console
   window.open(filePath, '_blank'); 
 };
 
