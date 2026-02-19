@@ -6,7 +6,7 @@ const projects = [
     id: 1,
     title: "Ultra-High Vacuum (UHV) System",
     description: "Led the construction of a UHV chamber for mass spectrometry experiments, including AFM-IR instrumentation setup and SEM calibration.",
-    image: "/projects/project1.jpeg",
+    image: "./projects/project1.jpeg",
     tags: ["UHV", "AFM-IR", "SEM", "Micro-controllers", "Data Acquisition"],
     githubUrl: null, // No GitHub link
   },
@@ -14,7 +14,7 @@ const projects = [
     id: 2,
     title: "Automated Algae Growth System",
     description: "Developed a fully automated algae growth system with PID-controlled heating and sensor integration for real-time monitoring of pH and oxygen.",
-    image: "/projects/project2.jpg",
+    image: "./projects/project2.jpg",
     tags: ["PID Control", "Sensors", "Automation", "Spectrometry", "Hardware"],
     githubUrl: null, // No GitHub link
   },
@@ -22,7 +22,7 @@ const projects = [
     id: 3,
     title: "Dating Latin Text",
     description: "Applied advanced deep learning methods to date ancient Latin texts, contributing to the computational understanding of historical language patterns.",
-    image: "/projects/project3.png",
+    image: "./projects/project3.png",
     tags: ["Deep Learning", "NLP", "Python", "Research"],
     githubUrl: "https://github.com/Sittch/DLT2",
   },
