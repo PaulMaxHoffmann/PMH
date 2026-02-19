@@ -3,28 +3,37 @@ import {
   Mail,
   MapPin,
   Send,
+  CheckCircle, // Added for success state
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useForm, ValidationError } from '@formspree/react'; // Integrated Formspree
 
 export const ContactSection = () => {
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  // 1. Initialize Formspree with your endpoint ID
+  const [state, handleSubmit] = useForm("xeellqnp");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // Simulate form submission
-    setTimeout(() => {
-      toast({
-        title: "Message sent!",
-        description: "Thank you, Paul-Maximilian will get back to you soon.",
-      });
-      setIsSubmitting(false);
-    }, 1500);
-  };
+  // 2. Success State View
+  if (state.succeeded) {
+    return (
+      <section id="contact" className="py-24 px-4 relative bg-secondary/30">
+        <div className="container mx-auto max-w-5xl text-center">
+          <div className="bg-card p-12 rounded-lg shadow-xl border border-primary/20 flex flex-col items-center">
+            <CheckCircle className="h-16 w-16 text-primary mb-6 animate-bounce" />
+            <h3 className="text-3xl font-bold mb-4">Message Sent!</h3>
+            <p className="text-muted-foreground mb-8">
+              Thank you, Paul-Maximilian will get back to you as soon as possible.
+            </p>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="px-6 py-2 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+            >
+              Send Another Message
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="contact" className="py-24 px-4 relative bg-secondary/30">
@@ -39,6 +48,7 @@ export const ContactSection = () => {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {/* Left Side: Contact Info */}
           <div className="space-y-8">
             <h3 className="text-2xl font-semibold mb-6">Contact Information</h3>
 
@@ -86,6 +96,7 @@ export const ContactSection = () => {
             </div>
           </div>
 
+          {/* Right Side: Updated Form */}
           <div className="bg-card p-8 rounded-lg shadow-sm">
             <h3 className="text-2xl font-semibold mb-6">Send a Message</h3>
             <form className="space-y-6" onSubmit={handleSubmit}>
@@ -96,11 +107,12 @@ export const ContactSection = () => {
                 <input
                   type="text"
                   id="name"
-                  name="name"
+                  name="name" // Ensure the name attribute is present for Formspree
                   required
                   className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="Enter your name..."
                 />
+                <ValidationError prefix="Name" field="name" errors={state.errors} className="text-red-500 text-xs mt-1" />
               </div>
 
               <div>
@@ -115,6 +127,7 @@ export const ContactSection = () => {
                   className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="your.email@example.com"
                 />
+                <ValidationError prefix="Email" field="email" errors={state.errors} className="text-red-500 text-xs mt-1" />
               </div>
 
               <div>
@@ -129,16 +142,17 @@ export const ContactSection = () => {
                   className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-none focus:ring-2 focus:ring-primary resize-none"
                   placeholder="Hello, I'd like to talk about..."
                 />
+                <ValidationError prefix="Message" field="message" errors={state.errors} className="text-red-500 text-xs mt-1" />
               </div>
 
               <button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={state.submitting}
                 className={cn(
                   "w-full flex items-center justify-center gap-2 py-3 rounded-md bg-primary text-primary-foreground hover:opacity-90 transition-opacity font-medium disabled:opacity-50"
                 )}
               >
-                {isSubmitting ? "Sending..." : "Send Message"}
+                {state.submitting ? "Sending..." : "Send Message"}
                 <Send size={16} />
               </button>
             </form>
