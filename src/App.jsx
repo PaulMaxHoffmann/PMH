@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Toaster />
-      <BrowserRouter>
+      <BrowserRouter basename="/PMH">
         <Routes>
           <Route index element={<Home />} />
           <Route path="*" element={<NotFound />} />
